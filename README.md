@@ -12,7 +12,7 @@ If you are using [Vundle](http://github.com/gmarik/vundle), as follows:
 
 2. Launch `vim`, run the following command:
     ```vim
-    :Gitqukck {branch-name} [{branch-name}]
+    :Gitquick {branch-name} [{branch-name}]
     ```
 
 If you omit the second argument, `{branch-name}` is `master`.  
