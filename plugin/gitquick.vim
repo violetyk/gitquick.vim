@@ -13,14 +13,22 @@ set cpo&vim
 
 set errorformat+=%m\	%f
 
+function! s:GetBranches(ArgLead, CmdLine, CursorPos) "{{{
+  let list = []
+  for branch in split(system('git branch'), "\n")
+    call add(list, matchstr(branch, '\([\*\s]*\)\zs[0-9A-Za-z/_.-]\+\ze\($\)'))
+  endfor
+  return filter(list, 'v:val =~ "^'. fnameescape(a:ArgLead) . '"')
+endfunction "}}}
+
 function! s:DiffBranch(...) "{{{
   if a:0 == 0 || !executable('git')
     return
   endif
 
   if a:0 == 1
-    let lhs = a:1
-    let rhs = 'master'
+    let rhs = a:1
+    let lhs = substitute(system('git rev-parse --abbrev-ref HEAD'), "\n$", "", "")
   else
     let lhs = a:1
     let rhs = a:2
@@ -31,7 +39,7 @@ function! s:DiffBranch(...) "{{{
   cwindow
 endfunction "}}}
 
-command! -n=* Gitquick call s:DiffBranch(<f-args>)
+command! -n=* -complete=customlist,s:GetBranches Gitquick call s:DiffBranch(<f-args>)
 
 let &cpo = s:save_cpo
 unlet s:save_cpo
