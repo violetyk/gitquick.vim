@@ -15,4 +15,4 @@ If you are using [Vundle](http://github.com/gmarik/vundle), as follows:
     :Gitquick {branch-name} [{branch-name}]
     ```
 
-If you omit the second argument, `{branch-name}` is `master`.  
+If you omit the second argument, `{branch-name}` is `current-branch`.  
