@@ -1,7 +1,7 @@
 " gitquick.vim
 " Maintainer:  Yuhei Kagaya <yuhei.kagaya@gmail.com>
 " License:     This file is placed in the public domain.
-" Last Change: 2013/05/31
+" Last Change: 2013/06/04
 
 if exists('g:loaded_gitquick_vim')
   finish
@@ -14,10 +14,7 @@ set cpo&vim
 set errorformat+=%m\	%f
 
 function! s:GetBranches(ArgLead, CmdLine, CursorPos) "{{{
-  let list = []
-  for branch in split(system('git branch'), "\n")
-    call add(list, matchstr(branch, '\([\*\s]*\)\zs[0-9A-Za-z/_.-]\+\ze\($\)'))
-  endfor
+  let list = gitquick#get_branches()
   return filter(list, 'v:val =~ "^'. fnameescape(a:ArgLead) . '"')
 endfunction "}}}
 
